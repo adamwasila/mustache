@@ -520,6 +520,18 @@ Outer:
 					return ret, nil
 				}
 				continue Outer
+			case reflect.Array:
+				fallthrough
+			case reflect.Slice:
+				idx, err := strconv.Atoi(reflect.ValueOf(name).String())
+				if err != nil {
+					continue Outer
+				}
+				ret := av.Index(idx)
+				if ret.IsValid() {
+					return ret, nil
+				}
+				continue Outer
 			default:
 				continue Outer
 			}
